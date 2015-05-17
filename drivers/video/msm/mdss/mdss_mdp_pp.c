@@ -5127,9 +5127,7 @@ int mdss_mdp_calib_mode(struct msm_fb_data_type *mfd,
 	return 0;
 }
 
-int mdss_mdp_calib_config_buffer(struct mdp_calib_config_buffer *cfg,
-						u32 *copyback)
-{
+int mdss_mdp_calib_config_buffer(struct mdp_calib_config_buffer *cfg, u32 *copyback) {
 	int ret = -1, counter;
 	uint32_t *buff = NULL, *buff_org = NULL;
 	void *ptr;
