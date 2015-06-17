@@ -43,6 +43,26 @@ config IOSCHED_ROW
 	  according to queue priority.
 	  Most suitable for mobile devices.
 
+config IOSCHED_SIO
+	tristate "Simple I/O scheduler"
+	default y
+	---help---
+		Simple I/O scheduler (SIO) aims to keep minimum overhead to 
+		achieve low latency to serve I/O requests. No priority 
+		quesues concepts, but only basic merging. Sio is a mix 
+		between noop & deadline. No reordering or sorting of requests
+
+config IOSCHED_ZEN
+	tristate "Zen I/O scheduler"
+	default y
+	---help---
+		ZEN scheduler is based on the VR Scheduler. It's an FCFS 
+		(First come, first serve) based algorithm, but it's not 
+		strictly FIFO. ZEN does not do any sorting. It uses 
+		deadlines for fairness, and treats synchronous requests 
+		with priority over asynchronous ones. Other than that, 
+		it's pretty much the same as no-op blended with VR features
+
 config IOSCHED_CFQ
 	tristate "CFQ I/O scheduler"
 	# If BLK_CGROUP is a module, CFQ has to be built as module.
@@ -73,6 +93,28 @@ config IOSCHED_FIOPS
           IOPS equally among all processes in the system. It's mainly for
           Flash based storage.
 
+config IOSCHED_BFQ
+  tristate "BFQ I/O scheduler"
+  depends on EXPERIMENTAL
+  default n
+  ---help---
+    The BFQ I/O scheduler tries to distribute bandwidth among
+    all processes according to their weights.
+    It aims at distributing the bandwidth as desired, independently of
+    the disk parameters and with any workload. It also tries to
+    guarantee low latency to interactive and soft real-time
+    applications.  If compiled built-in (saying Y here), BFQ can
+    be configured to support hierarchical scheduling.
+
+config CGROUP_BFQIO
+  bool "BFQ hierarchical scheduling support"
+  depends on CGROUPS && IOSCHED_BFQ=y
+  default n
+  ---help---
+    Enable hierarchical scheduling in BFQ, using the cgroups
+    filesystem interface.  The name of the subsystem will be
+    bfqio.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -99,8 +141,17 @@ choice
 	config DEFAULT_FIOPS
 		bool "FIOPS" if IOSCHED_FIOPS=y
 
+	config DEFAULT_SIO
+		bool "SIO" if IOSCHED_SIO=y
+
+	config DEFAULT_ZEN
+		bool "ZEN" if IOSCHED_ZEN=y
+
 	config DEFAULT_NOOP
 		bool "No-op"
+
+  config DEFAULT_BFQ
+    bool "BFQ" if IOSCHED_BFQ=y
 
 endchoice
 
@@ -110,7 +161,10 @@ config DEFAULT_IOSCHED
 	default "row" if DEFAULT_ROW
 	default "cfq" if DEFAULT_CFQ
 	default "fiops" if DEFAULT_FIOPS
+	default "sio" if DEFAULT_SIO
+	default "zen" if DEFAULT_ZEN
 	default "noop" if DEFAULT_NOOP
+	default "bfq" if DEFAULT_BFQ
 
 endmenu
 
