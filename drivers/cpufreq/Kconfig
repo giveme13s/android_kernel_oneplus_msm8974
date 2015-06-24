@@ -109,40 +109,11 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
-config CPU_FREQ_DEFAULT_GOV_INTELLIACTIVE
-	bool "intelliactive"
-	select CPU_FREQ_GOV_INTELLIACTIVE
-	help
-	  Use the CPUFreq governor 'intelliactive' as default.
-
-config CPU_FREQ_DEFAULT_GOV_IMPULSE
-	bool "impulse"
-	select CPU_FREQ_GOV_IMPULSE
-	help
-	  Use the CPUFreq governor 'impulse' as default.
-
-config CPU_FREQ_DEFAULT_GOV_YANKACTIVE
-	bool "yankactive"
-	select CPU_FREQ_GOV_YANKACTIVE
-	help
-	  Use the CPUFreq governor 'yankactive' as default.
-		Good for balanced battery saving and performance.
-
-config CPU_FREQ_DEFAULT_GOV_SMARTMAX
-	bool "smartmax"
-	select CPU_FREQ_GOV_SMARTMAX
-	help
-	  Use the CPUFreq governor 'smartmax' as default.
-		Good for battery life.
-
-config CPU_FREQ_DEFAULT_GOV_ZZMOOVE
-          bool "zzmoove"
-          select CPU_FREQ_GOV_ZZMOOVE
-          select CPU_FREQ_GOV_PERFORMANCE
-          help
-          Use the CPUFreq governor 'zzmoove' as default, using predefined
-          frequency lookup tables and optimized scaling triggers instead of
-          % frequency steps to get smooth up/downscaling dependant on CPU load.
+config CPU_FREQ_DEFAULT_GOV_LIONHEART
+            bool "lionheart"
+            select CPU_FREQ_GOV_LIONHEART
+            help
+              Use the CPUFreq governor 'lionheart' as default.
 
 config CPU_FREQ_DEFAULT_GOV_LIONHEART
             bool "lionheart"
@@ -247,41 +218,12 @@ config CPU_FREQ_GOV_CONSERVATIVE
 
 	  If in doubt, say N.
 
-config CPU_FREQ_GOV_INTELLIACTIVE
-	tristate "'intelliactive' cpufreq policy governor"
-	depends on CPU_FREQ
-	help
-	  'intelliactive' - intelliactive governor
-
-config CPU_FREQ_GOV_IMPULSE
-	tristate "'impulse' cpufreq policy governor"
-	depends on CPU_FREQ
-	help
-	  'impulse' - impulse governor
-
-config CPU_FREQ_GOV_YANKACTIVE
-	tristate "'yankanctive' cpufreq policy governor"
-	depends on CPU_FREQ
-	help
-	  'yankactive' - yankactive governor
-		Good for balanced battery saving and performance.
-
-config CPU_FREQ_GOV_SMARTMAX
-	tristate "'smartmax' cpufreq policy governor"
-	depends on CPU_FREQ
-	help
-	  'smartmax' - smartmax is a new governor which is a mix
-		between ondemand and smartassv2.
-		Good for battery life.
-
-config CPU_FREQ_GOV_ZZMOOVE
-        tristate "'zzmoove' cpufreq governor"
-        depends on CPU_FREQ
-        help
-          'zzmoove' - based on cpufreq_conservative, using predefined
-          frequency lookup tables and optimized scaling triggers instead of
-          % frequency steps to get smooth up/downscaling dependant on CPU load.
-          If in doubt, say N.
+config CPU_FREQ_GOV_LIONHEART
+           tristate "'lionheart' cpufreq governor"
+           depends on CPU_FREQ
+           help
+             lionheart' - a "smart" optimized governor!
+             If in doubt, say N.
 
 config CPU_FREQ_GOV_LIONHEART
            tristate "'lionheart' cpufreq governor"
